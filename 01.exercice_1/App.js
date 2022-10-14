@@ -1,10 +1,11 @@
-// constante globale
 const pixelRatio = window.devicePixelRatio;
-// variable globale
+
 let monCanvas;
 let mesOutils;
 let rotationP = Math.PI;
 let rotationN = 0;
+
+let isAnimated = false;
 
 //turquoise
 let color1 = {
@@ -38,6 +39,14 @@ function start() {
   monCanvas.style.height = window.innerHeight - 60 * pixelRatio;
   mesOutils = monCanvas.getContext("2d");
 
+  document.addEventListener("click", function () {
+    if (isAnimated == true) {
+      isAnimated = false;
+    } else {
+      isAnimated = true;
+    }
+  });
+
   animate();
 }
 
@@ -60,13 +69,12 @@ function animate() {
   lerpValue = Math.sin(performance.now() * 0.0001);
   lerpValue = (lerpValue + 1) / 2; // 0 a 1
 
-  console.log();
-
-  rotationP += 0.001;
-  rotationN -= 0.001;
+  if (isAnimated == true) {
+    rotationP += 0.005;
+    rotationN -= 0.005;
+  }
 
   dessine();
-  // shape(0, 0, 0);
 }
 
 function dessine() {
@@ -77,9 +85,9 @@ function dessine() {
   let lerpedColor2 = lerpCol(color2, color3, lerpValue);
   let lerpedColor3 = lerpCol(color3, color1, lerpValue);
 
-  let couleur3 = rgb(lerpedColor2.r, lerpedColor2.g, lerpedColor2.b);
-  let couleur2 = rgb(lerpedColor1.r, lerpedColor1.g, lerpedColor1.b);
   let couleur1 = rgb(lerpedColor3.r, lerpedColor3.g, lerpedColor3.b);
+  let couleur2 = rgb(lerpedColor1.r, lerpedColor1.g, lerpedColor1.b);
+  let couleur3 = rgb(lerpedColor2.r, lerpedColor2.g, lerpedColor2.b);
 
   mesOutils.save();
 
