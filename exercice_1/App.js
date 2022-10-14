@@ -62,8 +62,8 @@ function animate() {
 
   console.log();
 
-  rotationP += 0.005;
-  rotationN -= 0.005;
+  rotationP += 0.001;
+  rotationN -= 0.001;
 
   dessine();
   // shape(0, 0, 0);
