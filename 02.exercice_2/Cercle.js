@@ -1,9 +1,8 @@
 class Cercle {
-  constructor(r1, r2) {
+  constructor(r) {
     this.x = monCanvas.width / 2;
     this.y = monCanvas.height / 2;
-    this.r1 = r1;
-    this.r2 = r2;
+    this.r = r;
     this.angle = Math.PI;
     this.angle1 = 0;
     this.angle2 = 2 * Math.PI;
@@ -15,12 +14,10 @@ class Cercle {
   draw() {
     mesOutils.beginPath();
     mesOutils.strokeStyle = "white";
-
     this.lineWidth = 10;
-    mesOutils.arc(this.x, this.y, this.r1, this.r2, this.angle1, this.angle2);
+    mesOutils.arc(0, 0, this.r, this.r, this.angle1, this.angle2);
     mesOutils.stroke();
     mesOutils.closePath();
-    mesOutils.restore();
   }
 
   updateSize() {

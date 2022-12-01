@@ -1,4 +1,4 @@
-class Character {
+class Cane {
   constructor(x, y, radius, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
@@ -12,7 +12,7 @@ class Character {
     /*
           vitesse de d'incrémentation de t
         */
-    this.speed = 0.01;
+    this.speed = 0.003;
     /*
           t est un compteur qui va de 0 à 1
           qui definit la portion du chemin parcouru
@@ -26,14 +26,16 @@ class Character {
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.save();
-    this.ctx.translate(this.position.x + 350, this.position.y + 100);
-    this.ctx.lineWidth = 10;
+    this.ctx.translate(this.position.x - 300, this.position.y - 110);
+    this.ctx.rotate((this.radius * Math.PI) / 180);
+    this.ctx.strokeStyle = "white";
+    this.ctx.lineWidth = 20;
     this.ctx.beginPath();
-    this.ctx.arc(x, this.radius, 50, 0, Math.PI * 2, false);
+    this.ctx.arc(x - 50, y, 50, Math.PI, 2 * Math.PI);
+    this.ctx.moveTo(x, y);
+    this.ctx.lineTo(x, y + 250);
     this.ctx.closePath();
-    this.ctx.fill();
     this.ctx.stroke();
-    // this.cane(this.radius + 150, y - 80);
     this.ctx.restore();
   }
 
@@ -47,22 +49,22 @@ class Character {
     this.t = 0;
     this.originRadius = this.radius;
     if (this.radius == 0) {
-      this.targetRadius = 200;
+      this.targetRadius = 4 * 360;
     } else {
       this.targetRadius = 0;
     }
     this.originHue = this.hue;
-    this.targetHue = this.hue + 100;
+    this.targetHue = this.hue + 50;
   }
 
   changeAngle(mouseX, mouseY) {
     if (
-      mouseX > this.position.x + 350 - 50 &&
-      mouseX < this.position.x + 350 + 50
+      mouseX > this.position.x - 300 - 50 &&
+      mouseX < this.position.x - 300 + 50
     ) {
       if (
-        mouseY > this.position.y + 100 + this.radius - 50 &&
-        mouseY < this.position.y + 100 + this.radius + 50
+        mouseY > this.position.y - 90 - 50 &&
+        mouseY < this.position.y - 90 + 50
       ) {
         this.resetAndGo();
       }
@@ -75,7 +77,7 @@ class Character {
     //on incrémente t par la vitesse
     this.t += this.speed;
     //on calcule le facteur d'interpolation suivant le type de easing
-    const ease = Easing.backOut(this.t);
+    const ease = Easing.circIn(this.t);
 
     //nouvelle position
     // on part de la position d'origine
@@ -96,19 +98,5 @@ class Character {
     return Math.sqrt(
       Math.pow(target.x - goal.x, 2) + Math.pow(target.y - goal.y, 2)
     );
-  }
-
-  cane(x, y) {
-    this.ctx.save();
-    this.ctx.rotate((20 * Math.PI) / 180);
-    this.ctx.strokeStyle = "white";
-    this.ctx.lineWidth = 20;
-    this.ctx.beginPath();
-    this.ctx.arc(x - 30, y - 20, 50, Math.PI, 2 * Math.PI);
-    this.ctx.moveTo(x + 20, y - 20);
-    this.ctx.lineTo(x + 20, y + 200);
-    this.ctx.closePath();
-    this.ctx.stroke();
-    this.ctx.restore();
   }
 }

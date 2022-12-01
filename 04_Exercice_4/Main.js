@@ -1,4 +1,4 @@
-class Character {
+class Main {
   constructor(x, y, radius, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
@@ -12,7 +12,7 @@ class Character {
     /*
           vitesse de d'incrémentation de t
         */
-    this.speed = 0.01;
+    this.speed = 0.001;
     /*
           t est un compteur qui va de 0 à 1
           qui definit la portion du chemin parcouru
@@ -26,10 +26,10 @@ class Character {
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.save();
-    this.ctx.translate(this.position.x + 350, this.position.y + 100);
+    this.ctx.translate(this.position.x - 300, this.position.y - 90);
     this.ctx.lineWidth = 10;
     this.ctx.beginPath();
-    this.ctx.arc(x, this.radius, 50, 0, Math.PI * 2, false);
+    this.ctx.arc(x, y, 50, 0, Math.PI * 2, false);
     this.ctx.closePath();
     this.ctx.fill();
     this.ctx.stroke();
@@ -47,7 +47,7 @@ class Character {
     this.t = 0;
     this.originRadius = this.radius;
     if (this.radius == 0) {
-      this.targetRadius = 200;
+      this.targetRadius = 100;
     } else {
       this.targetRadius = 0;
     }
@@ -55,19 +55,6 @@ class Character {
     this.targetHue = this.hue + 100;
   }
 
-  changeAngle(mouseX, mouseY) {
-    if (
-      mouseX > this.position.x + 350 - 50 &&
-      mouseX < this.position.x + 350 + 50
-    ) {
-      if (
-        mouseY > this.position.y + 100 + this.radius - 50 &&
-        mouseY < this.position.y + 100 + this.radius + 50
-      ) {
-        this.resetAndGo();
-      }
-    }
-  }
   /**
    * function de calcul de l'animation
    */
@@ -75,7 +62,7 @@ class Character {
     //on incrémente t par la vitesse
     this.t += this.speed;
     //on calcule le facteur d'interpolation suivant le type de easing
-    const ease = Easing.backOut(this.t);
+    const ease = Easing.backInOut(this.t);
 
     //nouvelle position
     // on part de la position d'origine

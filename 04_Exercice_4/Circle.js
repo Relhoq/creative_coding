@@ -12,7 +12,7 @@ class Circle {
     /*
         vitesse de d'incrémentation de t
       */
-    this.speed = 0.01;
+    this.speed = 0.001;
     /*
         t est un compteur qui va de 0 à 1
         qui definit la portion du chemin parcouru
@@ -20,7 +20,7 @@ class Circle {
     this.t = 0;
   }
 
-  draw(x, y1, y) {
+  draw(x, y) {
     //check si on est arrivé à destination
     if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
     else this.radius = this.targetRadius; //on force la position finale
@@ -29,10 +29,32 @@ class Circle {
     this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 10;
     this.ctx.save();
-    this.ctx.translate(this.position.x, this.position.y);
+    this.ctx.translate(this.position.x, this.position.y + 100);
+    this.ctx.rotate((this.radius * Math.PI) / 180);
     this.ctx.beginPath();
-    this.ctx.arc(50, y, this.radius, 0, 2 * Math.PI, false);
+    this.ctx.arc(50, y, 200, 0, 2 * Math.PI, false);
     this.ctx.fill();
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
+    this.ctx.stroke();
+    this.ctx.closePath();
+    this.eyes(0, 0, sizeY, sizeX);
+
+    this.ctx.beginPath();
+    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
+    this.ctx.stroke();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x + 80, y - sizeY / 8 - 30, 50, 0, 2 * Math.PI);
+    this.ctx.stroke();
+
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x + 160, y - sizeY / 8 + 20, 90, Math.PI, 2 * Math.PI, true);
     this.ctx.stroke();
     this.ctx.closePath();
     this.ctx.restore();
@@ -48,12 +70,23 @@ class Circle {
     this.t = 0;
     this.originRadius = this.radius;
     if (this.radius == 0) {
-      this.targetRadius = 100 + 100;
+      this.targetRadius = 2880 * 2;
     } else {
       this.targetRadius = 0;
     }
     this.originHue = this.hue;
     this.targetHue = this.hue + 50;
+  }
+
+  changeAngle(mouseX, mouseY) {
+    if (mouseX > this.position.x - 200 && mouseX < this.position.x + 200) {
+      if (
+        mouseY > this.position.y + 100 - 200 &&
+        mouseY < this.position.y + 100 + 200
+      ) {
+        this.resetAndGo();
+      }
+    }
   }
 
   /**
@@ -63,7 +96,7 @@ class Circle {
     //on incrémente t par la vitesse
     this.t += this.speed;
     //on calcule le facteur d'interpolation suivant le type de easing
-    const ease = Easing.bounceOut(this.t);
+    const ease = Easing.elasticOut(this.t);
 
     //nouvelle position
     // on part de la position d'origine
@@ -84,5 +117,20 @@ class Circle {
     return Math.sqrt(
       Math.pow(target.x - goal.x, 2) + Math.pow(target.y - goal.y, 2)
     );
+  }
+
+  eyes(x, y, size, sizeX) {
+    this.ctx.fillStyle = "white";
+    this.ctx.beginPath();
+    this.ctx.arc(x - size / 4, y - size / 4, sizeX / 10, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fill();
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x + size / 4, y - size / 4, sizeX / 10, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fill();
+    this.ctx.closePath();
   }
 }

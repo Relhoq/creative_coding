@@ -16,21 +16,40 @@ class App {
     document.body.appendChild(this.canvas);
     this.ctx = this.canvas.getContext("2d");
 
-    this.character = new Character(
-      this.ctx,
-      this.canvas.width / 2,
-      this.canvas.height / 2
-    );
-
-    this.rect = new Rect(100, 100, 200, this.ctx);
-
-    this.circle = new Circle(
+    this.main1 = new Character(
       this.canvas.width / 2,
       this.canvas.height / 2,
       200,
       this.ctx
     );
 
+    this.cane = new Cane(
+      this.canvas.width / 2,
+      this.canvas.height / 2,
+      0,
+      this.ctx
+    );
+
+    this.circle = new Circle(
+      this.canvas.width / 2,
+      this.canvas.height / 2,
+      0,
+      this.ctx
+    );
+
+    this.test = new Test(
+      this.canvas.width / 2,
+      this.canvas.height / 2,
+      0,
+      this.ctx
+    );
+
+    this.main = new Main(
+      this.canvas.width / 2,
+      this.canvas.height / 2,
+      0,
+      this.ctx
+    );
     this.setup();
   }
 
@@ -41,32 +60,26 @@ class App {
     sizeX = 200;
     sizeY = 200;
 
-    for (let i = 0; i < 5; i++) {
-      let character = new Character(
-        this.ctx,
-        this.canvas.width / 2,
-        this.canvas.height / 2
-      );
-      characters.push(character);
-    }
-
-    console.log(characters);
-
     document.addEventListener("click", this.click.bind(this));
     this.draw();
   }
 
-  draw(e) {
+  draw() {
     this.ctx.save();
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.restore();
 
-    this.circle.draw(0, this.canvas.height / 2, y);
+    this.circle.draw(0, 0);
 
-    this.character.draw(0, y, 200, sizeY, sizeX);
+    this.test.draw(450);
 
-    this.rect.draw(0, this.canvas.height / 2);
+    this.cane.draw(0, 0);
+
+    this.main.draw(0, 0);
+
+    this.main1.draw(0, 0);
+
     /*
     this.ctx.save();
     this.ctx.fillStyle = "black";
@@ -108,12 +121,22 @@ class App {
   }
 
   click(e) {
+    /*
     this.rect.resetAndGo(
       e.clientX * this.pixelRatio,
       e.clientY * this.pixelRatio
     );
+*/
 
-    this.circle.resetAndGo();
+    this.circle.changeAngle(e.clientX, e.clientY);
+
+    this.test.changeAngle(e.clientX, e.clientY);
+
+    //this.test.resetAndGo();
+
+    this.main1.changeAngle(e.clientX, e.clientY);
+
+    this.cane.changeAngle(e.clientX, e.clientY);
   }
 }
 
