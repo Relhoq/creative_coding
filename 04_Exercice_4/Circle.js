@@ -79,7 +79,7 @@ class Circle {
   }
 
   changeAngle(mouseX, mouseY) {
-    if (mouseX > this.position.x - 200 && mouseX < this.position.x + 200) {
+    if (mouseX > this.position.x - 150 && mouseX < this.position.x + 250) {
       if (
         mouseY > this.position.y + 100 - 200 &&
         mouseY < this.position.y + 100 + 200

@@ -4,7 +4,6 @@ class Cane {
     //scale de la forme
     this.originRadius = radius;
     this.targetRadius = radius;
-    this.hue = Math.round(Math.random() * 360);
     this.originHue = this.hue;
     this.targetHue = this.hue;
     this.radius = radius;
