@@ -10,13 +10,13 @@ class Character {
     this.radius = radius;
     this.ctx = ctx;
     /*
-          vitesse de d'incrémentation de t
-        */
-    this.speed = 0.01;
+        vitesse de d'incrémentation de t
+      */
+    this.speed = 0.001;
     /*
-          t est un compteur qui va de 0 à 1
-          qui definit la portion du chemin parcouru
-        */
+        t est un compteur qui va de 0 à 1
+        qui definit la portion du chemin parcouru
+      */
     this.t = 0;
   }
 
@@ -25,15 +25,38 @@ class Character {
     if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
     else this.radius = this.targetRadius; //on force la position finale
 
-    this.ctx.save();
-    this.ctx.translate(this.position.x + 350, this.position.y + 100);
+    this.ctx.fillStyle = `hsl(${this.hue},20%,30%)`;
+    this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 10;
+    this.ctx.save();
+    this.ctx.translate(this.position.x, this.position.y + 100);
+    this.ctx.rotate((this.radius * Math.PI) / 180);
     this.ctx.beginPath();
-    this.ctx.arc(x, this.radius, 50, 0, Math.PI * 2, false);
-    this.ctx.closePath();
+    this.ctx.arc(50, y, 200, 0, 2 * Math.PI, false);
     this.ctx.fill();
     this.ctx.stroke();
-    // this.cane(this.radius + 150, y - 80);
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
+    this.ctx.stroke();
+    this.ctx.closePath();
+    this.eyes(0, 0, sizeY, sizeX);
+
+    this.ctx.beginPath();
+    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
+    this.ctx.stroke();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x + 80, y - sizeY / 8 - 30, 50, 0, 2 * Math.PI);
+    this.ctx.stroke();
+
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x + 160, y - sizeY / 8 + 20, 90, Math.PI, 2 * Math.PI, true);
+    this.ctx.stroke();
+    this.ctx.closePath();
     this.ctx.restore();
   }
 
@@ -47,27 +70,25 @@ class Character {
     this.t = 0;
     this.originRadius = this.radius;
     if (this.radius == 0) {
-      this.targetRadius = 200;
+      this.targetRadius = 2880 * 2;
     } else {
       this.targetRadius = 0;
     }
     this.originHue = this.hue;
-    this.targetHue = this.hue + 100;
+    this.targetHue = this.hue + 50;
   }
 
   changeAngle(mouseX, mouseY) {
-    if (
-      mouseX > this.position.x + 350 - 50 &&
-      mouseX < this.position.x + 350 + 50
-    ) {
+    if (mouseX > this.position.x - 150 && mouseX < this.position.x + 250) {
       if (
-        mouseY > this.position.y + 100 + this.radius - 50 &&
-        mouseY < this.position.y + 100 + this.radius + 50
+        mouseY > this.position.y + 100 - 200 &&
+        mouseY < this.position.y + 100 + 200
       ) {
         this.resetAndGo();
       }
     }
   }
+
   /**
    * function de calcul de l'animation
    */
@@ -75,7 +96,7 @@ class Character {
     //on incrémente t par la vitesse
     this.t += this.speed;
     //on calcule le facteur d'interpolation suivant le type de easing
-    const ease = Easing.backOut(this.t);
+    const ease = Easing.elasticOut(this.t);
 
     //nouvelle position
     // on part de la position d'origine
@@ -98,17 +119,18 @@ class Character {
     );
   }
 
-  cane(x, y) {
-    this.ctx.save();
-    this.ctx.rotate((20 * Math.PI) / 180);
-    this.ctx.strokeStyle = "white";
-    this.ctx.lineWidth = 20;
+  eyes(x, y, size, sizeX) {
+    this.ctx.fillStyle = "white";
     this.ctx.beginPath();
-    this.ctx.arc(x - 30, y - 20, 50, Math.PI, 2 * Math.PI);
-    this.ctx.moveTo(x + 20, y - 20);
-    this.ctx.lineTo(x + 20, y + 200);
-    this.ctx.closePath();
+    this.ctx.arc(x - size / 4, y - size / 4, sizeX / 10, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.restore();
+    this.ctx.fill();
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.arc(x + size / 4, y - size / 4, sizeX / 10, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fill();
+    this.ctx.closePath();
   }
 }

@@ -1,4 +1,4 @@
-class Circle {
+class Hat {
   constructor(x, y, radius, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
@@ -10,13 +10,13 @@ class Circle {
     this.radius = radius;
     this.ctx = ctx;
     /*
-        vitesse de d'incrémentation de t
-      */
-    this.speed = 0.001;
+          vitesse de d'incrémentation de t
+        */
+    this.speed = 0.005;
     /*
-        t est un compteur qui va de 0 à 1
-        qui definit la portion du chemin parcouru
-      */
+          t est un compteur qui va de 0 à 1
+          qui definit la portion du chemin parcouru
+        */
     this.t = 0;
   }
 
@@ -25,38 +25,24 @@ class Circle {
     if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
     else this.radius = this.targetRadius; //on force la position finale
 
-    this.ctx.fillStyle = `hsl(${this.hue},20%,30%)`;
-    this.ctx.strokeStyle = "white";
-    this.ctx.lineWidth = 10;
     this.ctx.save();
-    this.ctx.translate(this.position.x, this.position.y + 100);
-    this.ctx.rotate((this.radius * Math.PI) / 180);
+    this.ctx.fillStyle = "white";
+    this.ctx.translate(this.position.x, this.position.y);
+    this.ctx.translate(-460, -800);
+
+    this.ctx.lineWidth = 20;
     this.ctx.beginPath();
-    this.ctx.arc(50, y, 200, 0, 2 * Math.PI, false);
+    this.ctx.fillRect(x, this.radius, 100, 200);
+    this.ctx.fillRect(x - 50, this.radius + 180, 200, 20);
+    this.ctx.fillStyle = "black";
+    this.ctx.strokeStyle = "white";
+    this.ctx.beginPath();
+    this.ctx.fillRect(x + 5, this.radius + 130, 90, 50);
+    this.ctx.closePath();
     this.ctx.fill();
     this.ctx.stroke();
     this.ctx.closePath();
 
-    this.ctx.beginPath();
-    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
-    this.ctx.stroke();
-    this.ctx.closePath();
-    this.eyes(0, 0, sizeY, sizeX);
-
-    this.ctx.beginPath();
-    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
-    this.ctx.stroke();
-
-    this.ctx.beginPath();
-    this.ctx.arc(x + 80, y - sizeY / 8 - 30, 50, 0, 2 * Math.PI);
-    this.ctx.stroke();
-
-    this.ctx.closePath();
-
-    this.ctx.beginPath();
-    this.ctx.arc(x + 160, y - sizeY / 8 + 20, 90, Math.PI, 2 * Math.PI, true);
-    this.ctx.stroke();
-    this.ctx.closePath();
     this.ctx.restore();
   }
 
@@ -70,19 +56,22 @@ class Circle {
     this.t = 0;
     this.originRadius = this.radius;
     if (this.radius == 0) {
-      this.targetRadius = 2880 * 2;
+      this.targetRadius = 460;
     } else {
       this.targetRadius = 0;
     }
     this.originHue = this.hue;
-    this.targetHue = this.hue + 50;
+    this.targetHue = this.hue + 100;
   }
 
   changeAngle(mouseX, mouseY) {
-    if (mouseX > this.position.x - 150 && mouseX < this.position.x + 250) {
+    if (
+      mouseX > this.position.x + 350 - 50 &&
+      mouseX < this.position.x + 350 + 50
+    ) {
       if (
-        mouseY > this.position.y + 100 - 200 &&
-        mouseY < this.position.y + 100 + 200
+        mouseY > this.position.y + 100 + this.radius - 480 - 50 &&
+        mouseY < this.position.y + 100 + this.radius + 480 + 50
       ) {
         this.resetAndGo();
       }
@@ -96,7 +85,7 @@ class Circle {
     //on incrémente t par la vitesse
     this.t += this.speed;
     //on calcule le facteur d'interpolation suivant le type de easing
-    const ease = Easing.elasticOut(this.t);
+    const ease = Easing.bounceOut(this.t);
 
     //nouvelle position
     // on part de la position d'origine

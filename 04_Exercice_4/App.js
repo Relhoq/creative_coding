@@ -16,7 +16,7 @@ class App {
     document.body.appendChild(this.canvas);
     this.ctx = this.canvas.getContext("2d");
 
-    this.main1 = new Character(
+    this.main1 = new Main1(
       this.canvas.width / 2,
       this.canvas.height / 2,
       200,
@@ -30,14 +30,14 @@ class App {
       this.ctx
     );
 
-    this.circle = new Circle(
+    this.circle = new Character(
       this.canvas.width / 2,
       this.canvas.height / 2,
       0,
       this.ctx
     );
 
-    this.test = new Test(
+    this.hat = new Hat(
       this.canvas.width / 2,
       this.canvas.height / 2,
       0,
@@ -72,7 +72,7 @@ class App {
 
     this.circle.draw(0, 0);
 
-    this.test.draw(450);
+    this.hat.draw(450);
 
     this.cane.draw(0, 0);
 
@@ -130,7 +130,7 @@ class App {
 
     this.circle.changeAngle(e.clientX, e.clientY);
 
-    this.test.changeAngle(e.clientX, e.clientY);
+    this.hat.changeAngle(e.clientX, e.clientY);
 
     //this.test.resetAndGo();
 

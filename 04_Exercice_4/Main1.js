@@ -1,4 +1,4 @@
-class Test {
+class Main1 {
   constructor(x, y, radius, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
@@ -12,7 +12,7 @@ class Test {
     /*
           vitesse de d'incrémentation de t
         */
-    this.speed = 0.005;
+    this.speed = 0.01;
     /*
           t est un compteur qui va de 0 à 1
           qui definit la portion du chemin parcouru
@@ -26,23 +26,14 @@ class Test {
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.save();
-    this.ctx.fillStyle = "white";
-    this.ctx.translate(this.position.x, this.position.y);
-    this.ctx.translate(-460, -800);
-
-    this.ctx.lineWidth = 20;
+    this.ctx.translate(this.position.x + 350, this.position.y + 100);
+    this.ctx.lineWidth = 10;
     this.ctx.beginPath();
-    this.ctx.fillRect(x, this.radius, 100, 200);
-    this.ctx.fillRect(x - 50, this.radius + 180, 200, 20);
-    this.ctx.fillStyle = "black";
-    this.ctx.strokeStyle = "white";
-    this.ctx.beginPath();
-    this.ctx.fillRect(x + 5, this.radius + 130, 90, 50);
+    this.ctx.arc(x, this.radius, 50, 0, Math.PI * 2, false);
     this.ctx.closePath();
     this.ctx.fill();
     this.ctx.stroke();
-    this.ctx.closePath();
-
+    // this.cane(this.radius + 150, y - 80);
     this.ctx.restore();
   }
 
@@ -56,7 +47,7 @@ class Test {
     this.t = 0;
     this.originRadius = this.radius;
     if (this.radius == 0) {
-      this.targetRadius = 460;
+      this.targetRadius = 200;
     } else {
       this.targetRadius = 0;
     }
@@ -70,14 +61,13 @@ class Test {
       mouseX < this.position.x + 350 + 50
     ) {
       if (
-        mouseY > this.position.y + 100 + this.radius - 480 - 50 &&
-        mouseY < this.position.y + 100 + this.radius + 480 + 50
+        mouseY > this.position.y + 100 + this.radius - 50 &&
+        mouseY < this.position.y + 100 + this.radius + 50
       ) {
         this.resetAndGo();
       }
     }
   }
-
   /**
    * function de calcul de l'animation
    */
@@ -85,7 +75,7 @@ class Test {
     //on incrémente t par la vitesse
     this.t += this.speed;
     //on calcule le facteur d'interpolation suivant le type de easing
-    const ease = Easing.bounceOut(this.t);
+    const ease = Easing.backOut(this.t);
 
     //nouvelle position
     // on part de la position d'origine
@@ -108,18 +98,17 @@ class Test {
     );
   }
 
-  eyes(x, y, size, sizeX) {
-    this.ctx.fillStyle = "white";
+  cane(x, y) {
+    this.ctx.save();
+    this.ctx.rotate((20 * Math.PI) / 180);
+    this.ctx.strokeStyle = "white";
+    this.ctx.lineWidth = 20;
     this.ctx.beginPath();
-    this.ctx.arc(x - size / 4, y - size / 4, sizeX / 10, 0, 2 * Math.PI);
-    this.ctx.stroke();
-    this.ctx.fill();
+    this.ctx.arc(x - 30, y - 20, 50, Math.PI, 2 * Math.PI);
+    this.ctx.moveTo(x + 20, y - 20);
+    this.ctx.lineTo(x + 20, y + 200);
     this.ctx.closePath();
-
-    this.ctx.beginPath();
-    this.ctx.arc(x + size / 4, y - size / 4, sizeX / 10, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.closePath();
+    this.ctx.restore();
   }
 }
