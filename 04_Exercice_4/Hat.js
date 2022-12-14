@@ -12,7 +12,7 @@ class Hat {
     /*
           vitesse de d'incrémentation de t
         */
-    this.speed = 0.005;
+    this.speed = 0.008;
     /*
           t est un compteur qui va de 0 à 1
           qui definit la portion du chemin parcouru
@@ -66,8 +66,8 @@ class Hat {
 
   changeAngle(mouseX, mouseY) {
     if (
-      mouseX > this.position.x + 350 - 50 &&
-      mouseX < this.position.x + 350 + 50
+      mouseX > this.position.x + 320 - 50 &&
+      mouseX < this.position.x + 320 + 50
     ) {
       if (
         mouseY > this.position.y + 100 + this.radius - 480 - 50 &&

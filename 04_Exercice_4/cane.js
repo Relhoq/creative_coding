@@ -11,7 +11,7 @@ class Cane {
     /*
           vitesse de d'incrémentation de t
         */
-    this.speed = 0.003;
+    this.speed = 0.01;
     /*
           t est un compteur qui va de 0 à 1
           qui definit la portion du chemin parcouru
@@ -25,7 +25,7 @@ class Cane {
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.save();
-    this.ctx.translate(this.position.x - 300, this.position.y - 110);
+    this.ctx.translate(this.position.x - 230, this.position.y - 110);
     this.ctx.rotate((this.radius * Math.PI) / 180);
     this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 20;
@@ -58,8 +58,8 @@ class Cane {
 
   changeAngle(mouseX, mouseY) {
     if (
-      mouseX > this.position.x - 300 - 50 &&
-      mouseX < this.position.x - 300 + 50
+      mouseX > this.position.x - 230 - 50 &&
+      mouseX < this.position.x - 230 + 50
     ) {
       if (
         mouseY > this.position.y - 90 - 50 &&

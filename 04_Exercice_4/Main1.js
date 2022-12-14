@@ -26,7 +26,7 @@ class Main1 {
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.save();
-    this.ctx.translate(this.position.x + 350, this.position.y + 100);
+    this.ctx.translate(this.position.x + 320, this.position.y + 100);
     this.ctx.lineWidth = 10;
     this.ctx.beginPath();
     this.ctx.arc(x, this.radius, 50, 0, Math.PI * 2, false);
@@ -57,8 +57,8 @@ class Main1 {
 
   changeAngle(mouseX, mouseY) {
     if (
-      mouseX > this.position.x + 350 - 50 &&
-      mouseX < this.position.x + 350 + 50
+      mouseX > this.position.x + 320 - 50 &&
+      mouseX < this.position.x + 320 + 50
     ) {
       if (
         mouseY > this.position.y + 100 + this.radius - 50 &&

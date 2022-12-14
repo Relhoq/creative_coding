@@ -26,7 +26,7 @@ class Main {
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.save();
-    this.ctx.translate(this.position.x - 300, this.position.y - 90);
+    this.ctx.translate(this.position.x - 230, this.position.y - 90);
     this.ctx.lineWidth = 10;
     this.ctx.beginPath();
     this.ctx.arc(x, y, 50, 0, Math.PI * 2, false);
