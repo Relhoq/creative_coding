@@ -12,7 +12,7 @@ class Character {
     /*
         vitesse de d'incrémentation de t
       */
-    this.speed = 0.001;
+    this.speed = 0.05;
     /*
         t est un compteur qui va de 0 à 1
         qui definit la portion du chemin parcouru
