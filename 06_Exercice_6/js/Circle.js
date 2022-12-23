@@ -1,10 +1,9 @@
 class Circle {
-  constructor(x, y, radius, ctx, factor) {
+  constructor(x, y, radius, ctx) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.ctx = ctx;
-    this.factor = factor;
     this.color = "rgb(255,255,255)";
     this.color_decomposed = {};
     this.color2 = "rgb(255,255,255)";

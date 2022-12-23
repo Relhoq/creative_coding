@@ -15,7 +15,7 @@ class App {
   setup() {
     // create grid
     this.points = [];
-    this.totalLines = 80;
+    this.totalLines = 100;
     this.subdivisions = 100;
     this.space = 1000 / this.subdivisions;
     this.width = this.space * this.subdivisions;
@@ -103,13 +103,13 @@ class App {
         );
       }
       this.ctx.save();
-      this.ctx.globalCompositeOperation = "destination-out";
+      //this.ctx.globalCompositeOperation = "destination-out";
       this.ctx.fill();
       this.ctx.restore();
       this.ctx.stroke();
       this.ctx.closePath();
     }
-    // requestAnimationFrame(this.draw.bind(this));
+    //requestAnimationFrame(this.draw.bind(this));
   }
 }
 
