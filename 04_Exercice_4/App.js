@@ -19,7 +19,8 @@ class App {
     this.main1 = new Main1(
       this.canvas.width / 2,
       this.canvas.height / 2,
-      200,
+      200 * this.pixelRatio,
+      this.pixelRatio,
       this.ctx
     );
 
@@ -27,6 +28,7 @@ class App {
       this.canvas.width / 2,
       this.canvas.height / 2,
       0,
+      this.pixelRatio,
       this.ctx
     );
 
@@ -34,6 +36,7 @@ class App {
       this.canvas.width / 2,
       this.canvas.height / 2,
       0,
+      this.pixelRatio,
       this.ctx
     );
 
@@ -41,6 +44,7 @@ class App {
       this.canvas.width / 2,
       this.canvas.height / 2,
       0,
+      this.pixelRatio,
       this.ctx
     );
 
@@ -48,17 +52,18 @@ class App {
       this.canvas.width / 2,
       this.canvas.height / 2,
       0,
+      this.pixelRatio,
       this.ctx
     );
     this.setup();
   }
 
   setup() {
-    y = -400;
-    ySpeed = 4;
+    y = -400 * this.pixelRatio;
+    ySpeed = 4 * this.pixelRatio;
 
-    sizeX = 200;
-    sizeY = 200;
+    sizeX = 200 * this.pixelRatio;
+    sizeY = 200 * this.pixelRatio;
 
     document.addEventListener("click", this.click.bind(this));
     this.draw();
@@ -72,7 +77,7 @@ class App {
 
     this.circle.draw(0, 0);
 
-    this.hat.draw(450);
+    this.hat.draw(450 * this.pixelRatio);
 
     this.cane.draw(0, 0);
 
@@ -91,14 +96,14 @@ class App {
     );
     this.ctx.restore();
 */
-    if (y >= 50) {
-      y = 50;
+    if (y >= 50 * this.pixelRatio) {
+      y = 50 * this.pixelRatio;
     } else {
       y += ySpeed;
     }
 
-    if (y >= -50) {
-      if (sizeX <= 100) {
+    if (y >= -50 * this.pixelRatio) {
+      if (sizeX <= 100 * this.pixelRatio) {
         sizeX += 0;
         sizeY += 0;
       } else {

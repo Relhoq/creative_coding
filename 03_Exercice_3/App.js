@@ -1,27 +1,39 @@
-// constante globale
-const pixelRatio = window.devicePixelRatio;
 // variable globale
+
+const pixelRatio = window.devicePixelRatio || 1;
+
 let monCanvas;
 let mesOutils;
 
 let lerpValue = 0;
-let r = 200;
+let size = 150 * pixelRatio;
 let angle = 90;
 
 let memoire = []; //new Array(); autre façon d'initaliser un array
 
 function start() {
   // constante locale
+
   monCanvas = document.getElementById("exercice_1");
-  monCanvas.width = (window.innerWidth - 60 * pixelRatio) * pixelRatio;
-  monCanvas.height = (window.innerHeight - 60 * pixelRatio) * pixelRatio;
-  monCanvas.style.width = window.innerWidth - 60 * pixelRatio;
-  monCanvas.style.height = window.innerHeight - 60 * pixelRatio;
+  monCanvas.width = window.innerWidth * pixelRatio;
+  monCanvas.height = window.innerHeight * pixelRatio;
+  monCanvas.style.width = window.innerWidth * pixelRatio;
+  monCanvas.style.height = window.innerHeight * pixelRatio;
   mesOutils = monCanvas.getContext("2d");
 
-  for (let i = 0; i < 6; i++) {
-    for (let j = 0; j < 6; j++) {
-      let simpleTile = new Tile(200 * i, 200 * j, angle * i, mesOutils);
+  let squareNumber = 6;
+  let midArray = (size * squareNumber) / 2;
+  let topLeftW = monCanvas.width / 2 - midArray;
+  let topLeftH = monCanvas.height / 2 - midArray;
+  for (let i = 0; i < squareNumber; i++) {
+    for (let j = 0; j < squareNumber; j++) {
+      let simpleTile = new Tile(
+        topLeftW + size * i,
+        topLeftH + size * j,
+        angle * i,
+        size,
+        mesOutils
+      );
       memoire.push(simpleTile);
     }
   }
@@ -30,11 +42,7 @@ function start() {
 
   document.addEventListener("click", function (event) {
     for (let i = 0; i < memoire.length; i++) {
-      memoire[i].changeAngle(
-        angle,
-        event.clientX + r / 2,
-        event.clientY + r / 2
-      );
+      memoire[i].changeAngle(event.clientX, event.clientY);
     }
   });
 }

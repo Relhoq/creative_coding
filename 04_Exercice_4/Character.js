@@ -1,18 +1,19 @@
 class Character {
-  constructor(x, y, radius, ctx) {
+  constructor(x, y, radius, pixelratio, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
-    this.originRadius = radius;
-    this.targetRadius = radius;
+    this.originRadius = radius * this.pixelratio;
+    this.targetRadius = radius * this.pixelratio;
+    this.pixelratio = pixelratio;
     this.hue = Math.round(Math.random() * 360);
     this.originHue = this.hue;
     this.targetHue = this.hue;
-    this.radius = radius;
+    this.radius = radius * this.pixelratio;
     this.ctx = ctx;
     /*
         vitesse de d'incrémentation de t
       */
-    this.speed = 0.05;
+    this.speed = 0.001;
     /*
         t est un compteur qui va de 0 à 1
         qui definit la portion du chemin parcouru

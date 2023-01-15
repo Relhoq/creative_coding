@@ -35,6 +35,7 @@ class Circle {
     this.ctx.fill();
     this.ctx.closePath();
     this.ctx.restore();
+
     if (luminance > 0.1) {
       this.y -= luminance * 10;
     }

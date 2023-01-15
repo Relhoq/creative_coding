@@ -1,9 +1,10 @@
 class Hat {
-  constructor(x, y, radius, ctx) {
+  constructor(x, y, radius, pixelratio, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
     this.originRadius = radius;
     this.targetRadius = radius;
+    this.pixelratio = pixelratio;
     this.hue = Math.round(Math.random() * 360);
     this.originHue = this.hue;
     this.targetHue = this.hue;

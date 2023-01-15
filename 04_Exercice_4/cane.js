@@ -1,12 +1,13 @@
 class Cane {
-  constructor(x, y, radius, ctx) {
+  constructor(x, y, radius, pixelratio, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
-    this.originRadius = radius;
-    this.targetRadius = radius;
+    this.originRadius = radius * this.pixelratio;
+    this.targetRadius = radius * this.pixelratio;
+    this.pixelratio = pixelratio;
     this.originHue = this.hue;
     this.targetHue = this.hue;
-    this.radius = radius;
+    this.radius = radius * this.pixelratio;
     this.ctx = ctx;
     /*
           vitesse de d'incrémentation de t

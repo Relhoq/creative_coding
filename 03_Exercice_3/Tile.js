@@ -1,15 +1,15 @@
 class Tile {
-  constructor(x, y, angle, ctx) {
+  constructor(x, y, angle, size, ctx) {
     this.x = x;
     this.y = y;
     this.ctx = ctx;
     this.angle = angle;
-    this.r = 200;
+    this.r = size;
     this.originSquareX = -this.r / 2;
     this.originSquareY = -this.r / 2;
   }
 
-  changeAngle(angle, mouseX, mouseY) {
+  changeAngle(mouseX, mouseY) {
     if (mouseX > this.x && mouseX < this.x + this.r) {
       if (mouseY > this.y && mouseY < this.y + this.r) {
         this.angle = this.angle += 90;
@@ -22,7 +22,7 @@ class Tile {
     // let originSquareY = -this.r / 2;
 
     mesOutils.save();
-    mesOutils.translate(this.x, this.y);
+    mesOutils.translate(this.x + this.r / 2, this.y + this.r / 2);
     mesOutils.rotate(this.angle * (Math.PI / 180));
 
     mesOutils.lineWidth = 2;
