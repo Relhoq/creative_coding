@@ -1,14 +1,16 @@
 class Character {
-  constructor(x, y, radius, pixelratio, ctx) {
+  constructor(x, y, radius, size, lineWidth, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
-    this.originRadius = radius * this.pixelratio;
-    this.targetRadius = radius * this.pixelratio;
-    this.pixelratio = pixelratio;
+    this.lineWidth = lineWidth;
+    this.size = size;
+
+    this.originRadius = radius;
+    this.targetRadius = radius;
     this.hue = Math.round(Math.random() * 360);
     this.originHue = this.hue;
     this.targetHue = this.hue;
-    this.radius = radius * this.pixelratio;
+    this.radius = radius;
     this.ctx = ctx;
     /*
         vitesse de d'incrémentation de t
@@ -21,41 +23,41 @@ class Character {
     this.t = 0;
   }
 
-  draw(x, y) {
+  draw() {
     //check si on est arrivé à destination
     if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.fillStyle = `hsl(${this.hue},20%,30%)`;
     this.ctx.strokeStyle = "white";
-    this.ctx.lineWidth = 10;
+    this.ctx.lineWidth = this.lineWidth;
     this.ctx.save();
-    this.ctx.translate(this.position.x, this.position.y + 100);
+    this.ctx.translate(this.position.x, this.position.y);
     this.ctx.rotate((this.radius * Math.PI) / 180);
     this.ctx.beginPath();
-    this.ctx.arc(50, y, 200, 0, 2 * Math.PI, false);
+    this.ctx.arc(0 + 50, 0, this.size, 0, 2 * Math.PI, false);
     this.ctx.fill();
     this.ctx.stroke();
     this.ctx.closePath();
 
     this.ctx.beginPath();
-    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
+    this.ctx.arc(0, 0 - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
     this.ctx.stroke();
     this.ctx.closePath();
     this.eyes(0, 0, sizeY, sizeX);
 
     this.ctx.beginPath();
-    this.ctx.arc(x, y - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
+    this.ctx.arc(0, 0 - sizeY / 8, sizeX / 5, Math.PI, 2 * Math.PI, true);
     this.ctx.stroke();
 
     this.ctx.beginPath();
-    this.ctx.arc(x + 80, y - sizeY / 8 - 30, 50, 0, 2 * Math.PI);
+    this.ctx.arc(0 + 80, 0 - sizeY / 8 - 30, 50, 0, 2 * Math.PI);
     this.ctx.stroke();
 
     this.ctx.closePath();
 
     this.ctx.beginPath();
-    this.ctx.arc(x + 160, y - sizeY / 8 + 20, 90, Math.PI, 2 * Math.PI, true);
+    this.ctx.arc(0 + 160, 0 - sizeY / 8 + 20, 90, Math.PI, 2 * Math.PI, true);
     this.ctx.stroke();
     this.ctx.closePath();
     this.ctx.restore();
@@ -82,8 +84,8 @@ class Character {
   changeAngle(mouseX, mouseY) {
     if (mouseX > this.position.x - 150 && mouseX < this.position.x + 250) {
       if (
-        mouseY > this.position.y + 100 - 200 &&
-        mouseY < this.position.y + 100 + 200
+        mouseY > this.position.y + 100 - this.size &&
+        mouseY < this.position.y + 100 + this.size
       ) {
         this.resetAndGo();
       }

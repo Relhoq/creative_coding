@@ -16,54 +16,58 @@ class App {
     document.body.appendChild(this.canvas);
     this.ctx = this.canvas.getContext("2d");
 
+    this.lineWidth = 10;
     this.main1 = new Main1(
-      this.canvas.width / 2,
-      this.canvas.height / 2,
-      200 * this.pixelRatio,
-      this.pixelRatio,
+      (window.innerWidth / 2) * this.pixelRatio,
+      (window.innerHeight / 2) * this.pixelRatio,
+      200,
+      50,
+      this.lineWidth,
       this.ctx
     );
 
     this.cane = new Cane(
-      this.canvas.width / 2,
-      this.canvas.height / 2,
+      (window.innerWidth / 2) * this.pixelRatio,
+      (window.innerHeight / 2) * this.pixelRatio,
       0,
-      this.pixelRatio,
+      50,
       this.ctx
     );
 
     this.circle = new Character(
-      this.canvas.width / 2,
-      this.canvas.height / 2,
+      (window.innerWidth / 2) * this.pixelRatio,
+      (window.innerHeight / 2) * this.pixelRatio,
       0,
-      this.pixelRatio,
+      200,
+      this.lineWidth,
       this.ctx
     );
 
     this.hat = new Hat(
-      this.canvas.width / 2,
-      this.canvas.height / 2,
+      (window.innerWidth / 2) * this.pixelRatio,
+      (window.innerHeight / 2) * this.pixelRatio,
       0,
-      this.pixelRatio,
+      (window.innerWidth / 2) * this.pixelRatio,
+      (window.innerWidth / 2 - 460 / this.pixelRatio) * this.pixelRatio,
       this.ctx
     );
 
     this.main = new Main(
-      this.canvas.width / 2,
-      this.canvas.height / 2,
+      (window.innerWidth / 2) * this.pixelRatio,
+      (window.innerHeight / 2) * this.pixelRatio,
       0,
-      this.pixelRatio,
+      50,
       this.ctx
     );
     this.setup();
   }
 
   setup() {
-    y = -400 * this.pixelRatio;
-    ySpeed = 4 * this.pixelRatio;
+    y = -400;
+    ySpeed = 4;
 
-    sizeX = 200 * this.pixelRatio;
-    sizeY = 200 * this.pixelRatio;
+    sizeX = 200;
+    sizeY = 200;
 
     document.addEventListener("click", this.click.bind(this));
     this.draw();
@@ -75,15 +79,15 @@ class App {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.restore();
 
-    this.circle.draw(0, 0);
+    this.circle.draw();
 
-    this.hat.draw(450 * this.pixelRatio);
+    this.hat.draw();
 
-    this.cane.draw(0, 0);
+    this.cane.draw();
 
-    this.main.draw(0, 0);
+    this.main.draw();
 
-    this.main1.draw(0, 0);
+    this.main1.draw();
 
     /*
     this.ctx.save();
@@ -96,14 +100,14 @@ class App {
     );
     this.ctx.restore();
 */
-    if (y >= 50 * this.pixelRatio) {
-      y = 50 * this.pixelRatio;
+    if (y >= 50) {
+      y = 50;
     } else {
       y += ySpeed;
     }
 
-    if (y >= -50 * this.pixelRatio) {
-      if (sizeX <= 100 * this.pixelRatio) {
+    if (y >= -50) {
+      if (sizeX <= 100) {
         sizeX += 0;
         sizeY += 0;
       } else {
@@ -133,15 +137,27 @@ class App {
     );
 */
 
-    this.circle.changeAngle(e.clientX, e.clientY);
+    this.circle.changeAngle(
+      e.clientX * this.pixelRatio,
+      e.clientY * this.pixelRatio
+    );
 
-    this.hat.changeAngle(e.clientX, e.clientY);
+    this.hat.changeAngle(
+      e.clientX * this.pixelRatio,
+      e.clientY * this.pixelRatio
+    );
 
     //this.test.resetAndGo();
 
-    this.main1.changeAngle(e.clientX, e.clientY);
+    this.main1.changeAngle(
+      e.clientX * this.pixelRatio,
+      e.clientY * this.pixelRatio
+    );
 
-    this.cane.changeAngle(e.clientX, e.clientY);
+    this.cane.changeAngle(
+      e.clientX * this.pixelRatio,
+      e.clientY * this.pixelRatio
+    );
   }
 }
 

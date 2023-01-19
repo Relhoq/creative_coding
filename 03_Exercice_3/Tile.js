@@ -17,7 +17,7 @@ class Tile {
     }
   }
 
-  dessine() {
+  dessine(lineWidth) {
     // let originSquareX = -this.r / 2;
     // let originSquareY = -this.r / 2;
 
@@ -25,7 +25,7 @@ class Tile {
     mesOutils.translate(this.x + this.r / 2, this.y + this.r / 2);
     mesOutils.rotate(this.angle * (Math.PI / 180));
 
-    mesOutils.lineWidth = 2;
+    mesOutils.lineWidth = lineWidth;
     mesOutils.beginPath();
     mesOutils.strokeStyle = "black";
     mesOutils.rect(this.originSquareX, this.originSquareY, this.r, this.r);
@@ -34,7 +34,7 @@ class Tile {
 
     mesOutils.fillStyle = "grey";
 
-    mesOutils.lineWidth = 2;
+    mesOutils.lineWidth = lineWidth;
     mesOutils.beginPath();
     mesOutils.fillRect(this.originSquareX, this.originSquareY, this.r, this.r);
     mesOutils.stroke();
@@ -42,7 +42,7 @@ class Tile {
 
     mesOutils.fillStyle = "black";
 
-    mesOutils.lineWidth = 2;
+    mesOutils.lineWidth = lineWidth;
     mesOutils.beginPath();
     mesOutils.fillRect(
       this.originSquareX + this.r / 2,
@@ -53,7 +53,7 @@ class Tile {
     mesOutils.stroke();
     mesOutils.closePath();
 
-    mesOutils.lineWidth = 2;
+    mesOutils.lineWidth = lineWidth;
     mesOutils.beginPath();
     mesOutils.fillRect(
       this.originSquareX,
@@ -64,7 +64,7 @@ class Tile {
     mesOutils.stroke();
     mesOutils.closePath();
 
-    mesOutils.lineWidth = 4;
+    mesOutils.lineWidth = lineWidth * 2;
     mesOutils.strokeStyle = "black";
     mesOutils.beginPath();
     mesOutils.arc(

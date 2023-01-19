@@ -1,13 +1,13 @@
 class Cane {
-  constructor(x, y, radius, pixelratio, ctx) {
+  constructor(x, y, radius, size, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
-    this.originRadius = radius * this.pixelratio;
-    this.targetRadius = radius * this.pixelratio;
-    this.pixelratio = pixelratio;
+    this.size = size;
+    this.originRadius = radius;
+    this.targetRadius = radius;
     this.originHue = this.hue;
     this.targetHue = this.hue;
-    this.radius = radius * this.pixelratio;
+    this.radius = radius;
     this.ctx = ctx;
     /*
           vitesse de d'incrémentation de t
@@ -20,7 +20,7 @@ class Cane {
     this.t = 0;
   }
 
-  draw(x, y) {
+  draw() {
     //check si on est arrivé à destination
     if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
     else this.radius = this.targetRadius; //on force la position finale
@@ -31,9 +31,9 @@ class Cane {
     this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 20;
     this.ctx.beginPath();
-    this.ctx.arc(x - 50, y, 50, Math.PI, 2 * Math.PI);
-    this.ctx.moveTo(x, y);
-    this.ctx.lineTo(x, y + 250);
+    this.ctx.arc(0 - this.size, 0, this.size, Math.PI, 2 * Math.PI);
+    this.ctx.moveTo(0, 0);
+    this.ctx.lineTo(0, 0 + 250);
     this.ctx.closePath();
     this.ctx.stroke();
     this.ctx.restore();
@@ -54,17 +54,17 @@ class Cane {
       this.targetRadius = 0;
     }
     this.originHue = this.hue;
-    this.targetHue = this.hue + 50;
+    this.targetHue = this.hue + this.size;
   }
 
   changeAngle(mouseX, mouseY) {
     if (
-      mouseX > this.position.x - 230 - 50 &&
-      mouseX < this.position.x - 230 + 50
+      mouseX > this.position.x - 230 - this.size &&
+      mouseX < this.position.x - 230 + this.size
     ) {
       if (
-        mouseY > this.position.y - 90 - 50 &&
-        mouseY < this.position.y - 90 + 50
+        mouseY > this.position.y - 90 - this.size &&
+        mouseY < this.position.y - 90 + this.size
       ) {
         this.resetAndGo();
       }

@@ -1,13 +1,11 @@
 class Hat {
-  constructor(x, y, radius, pixelratio, ctx) {
+  constructor(x, y, radius, hattop, topphattarget, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
+    this.topphattarget = topphattarget;
     this.originRadius = radius;
     this.targetRadius = radius;
-    this.pixelratio = pixelratio;
-    this.hue = Math.round(Math.random() * 360);
-    this.originHue = this.hue;
-    this.targetHue = this.hue;
+    this.hattop = hattop;
     this.radius = radius;
     this.ctx = ctx;
     /*
@@ -21,24 +19,23 @@ class Hat {
     this.t = 0;
   }
 
-  draw(x, y) {
+  draw() {
     //check si on est arrivé à destination
     if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
     else this.radius = this.targetRadius; //on force la position finale
 
     this.ctx.save();
     this.ctx.fillStyle = "white";
-    this.ctx.translate(this.position.x, this.position.y);
-    this.ctx.translate(-460, -800);
+    this.ctx.translate(this.position.x, this.position.y - this.hattop);
 
     this.ctx.lineWidth = 20;
     this.ctx.beginPath();
-    this.ctx.fillRect(x, this.radius, 100, 200);
-    this.ctx.fillRect(x - 50, this.radius + 180, 200, 20);
+    this.ctx.fillRect(0, this.radius, 100, 200);
+    this.ctx.fillRect(0 - 50, this.radius + 180, 200, 20);
     this.ctx.fillStyle = "black";
     this.ctx.strokeStyle = "white";
     this.ctx.beginPath();
-    this.ctx.fillRect(x + 5, this.radius + 130, 90, 50);
+    this.ctx.fillRect(0 + 5, this.radius + 130, 90, 50);
     this.ctx.closePath();
     this.ctx.fill();
     this.ctx.stroke();
@@ -54,15 +51,16 @@ class Hat {
    *  assigner la nouvelle position de destination
    */
   resetAndGo() {
+    this.ctx.save();
+    this.ctx.translate(this.position.x, this.position.y);
     this.t = 0;
     this.originRadius = this.radius;
     if (this.radius == 0) {
-      this.targetRadius = 460;
+      this.targetRadius = this.topphattarget;
     } else {
       this.targetRadius = 0;
     }
-    this.originHue = this.hue;
-    this.targetHue = this.hue + 100;
+    this.ctx.restore();
   }
 
   changeAngle(mouseX, mouseY) {
@@ -71,8 +69,9 @@ class Hat {
       mouseX < this.position.x + 320 + 50
     ) {
       if (
-        mouseY > this.position.y + 100 + this.radius - 480 - 50 &&
-        mouseY < this.position.y + 100 + this.radius + 480 + 50
+        mouseY >
+          this.position.y + 100 + this.radius - this.topphattarget - 50 &&
+        mouseY < this.position.y + 100 + this.radius + this.topphattarget + 50
       ) {
         this.resetAndGo();
       }

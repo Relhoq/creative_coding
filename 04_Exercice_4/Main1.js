@@ -1,14 +1,15 @@
 class Main1 {
-  constructor(x, y, radius, pixelratio, ctx) {
+  constructor(x, y, position, radius, lineWidth, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
-    this.originRadius = radius;
-    this.targetRadius = radius;
-    this.pixelratio = pixelratio;
+    this.radius = radius;
+    this.lineWidth = lineWidth;
+    this.originPositionH = position;
+    this.targetPositionH = position;
     this.hue = Math.round(Math.random() * 360);
     this.originHue = this.hue;
     this.targetHue = this.hue;
-    this.radius = radius;
+    this.positionH = position;
     this.ctx = ctx;
     /*
           vitesse de d'incrémentation de t
@@ -21,16 +22,16 @@ class Main1 {
     this.t = 0;
   }
 
-  draw(x, y) {
+  draw() {
     //check si on est arrivé à destination
-    if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
-    else this.radius = this.targetRadius; //on force la position finale
+    if (Math.abs(this.targetPositionH - this.positionH) > 0.01) this.scale();
+    else this.positionH = this.targetPositionH; //on force la position finale
 
     this.ctx.save();
     this.ctx.translate(this.position.x + 320, this.position.y + 100);
-    this.ctx.lineWidth = 10;
+    this.ctx.lineWidth = this.lineWidth;
     this.ctx.beginPath();
-    this.ctx.arc(x, this.radius, 50, 0, Math.PI * 2, false);
+    this.ctx.arc(0, this.positionH, this.radius, 0, Math.PI * 2, false);
     this.ctx.closePath();
     this.ctx.fill();
     this.ctx.stroke();
@@ -46,11 +47,11 @@ class Main1 {
    */
   resetAndGo() {
     this.t = 0;
-    this.originRadius = this.radius;
-    if (this.radius == 0) {
-      this.targetRadius = 200;
+    this.originPositionH = this.positionH;
+    if (this.positionH == 0) {
+      this.targetPositionH = 200;
     } else {
-      this.targetRadius = 0;
+      this.targetPositionH = 0;
     }
     this.originHue = this.hue;
     this.targetHue = this.hue + 100;
@@ -58,12 +59,12 @@ class Main1 {
 
   changeAngle(mouseX, mouseY) {
     if (
-      mouseX > this.position.x + 320 - 50 &&
-      mouseX < this.position.x + 320 + 50
+      mouseX > this.position.x + 320 - this.radius &&
+      mouseX < this.position.x + 320 + this.radius
     ) {
       if (
-        mouseY > this.position.y + 100 + this.radius - 50 &&
-        mouseY < this.position.y + 100 + this.radius + 50
+        mouseY > this.position.y + 100 + this.positionH - this.radius &&
+        mouseY < this.position.y + 100 + this.positionH + this.radius
       ) {
         this.resetAndGo();
       }
@@ -84,8 +85,9 @@ class Main1 {
     // on multiplie cette distance par le facteur d'interpolation
     // this.position.x = this.origin.x + (this.target.x - this.origin.x) * ease;
     // this.position.y = this.origin.y + (this.target.y - this.origin.y) * ease;
-    this.radius = Math.abs(
-      this.originRadius + (this.targetRadius - this.originRadius) * ease
+    this.positionH = Math.abs(
+      this.originPositionH +
+        (this.targetPositionH - this.originPositionH) * ease
     );
     this.hue = this.originHue + (this.targetHue - this.originHue) * ease;
   }
@@ -97,19 +99,5 @@ class Main1 {
     return Math.sqrt(
       Math.pow(target.x - goal.x, 2) + Math.pow(target.y - goal.y, 2)
     );
-  }
-
-  cane(x, y) {
-    this.ctx.save();
-    this.ctx.rotate((20 * Math.PI) / 180);
-    this.ctx.strokeStyle = "white";
-    this.ctx.lineWidth = 20;
-    this.ctx.beginPath();
-    this.ctx.arc(x - 30, y - 20, 50, Math.PI, 2 * Math.PI);
-    this.ctx.moveTo(x + 20, y - 20);
-    this.ctx.lineTo(x + 20, y + 200);
-    this.ctx.closePath();
-    this.ctx.stroke();
-    this.ctx.restore();
   }
 }

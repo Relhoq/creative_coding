@@ -1,10 +1,10 @@
 class Main {
-  constructor(x, y, radius, pixelratio, ctx) {
+  constructor(x, y, radius, size, ctx) {
     this.position = { x: x, y: y };
     //scale de la forme
+    this.size = size;
     this.originRadius = radius;
     this.targetRadius = radius;
-    this.pixelratio = pixelratio;
     this.hue = Math.round(Math.random() * 360);
     this.originHue = this.hue;
     this.targetHue = this.hue;
@@ -21,7 +21,7 @@ class Main {
     this.t = 0;
   }
 
-  draw(x, y) {
+  draw() {
     //check si on est arrivé à destination
     if (Math.abs(this.targetRadius - this.radius) > 0.01) this.scale();
     else this.radius = this.targetRadius; //on force la position finale
@@ -30,7 +30,7 @@ class Main {
     this.ctx.translate(this.position.x - 230, this.position.y - 90);
     this.ctx.lineWidth = 10;
     this.ctx.beginPath();
-    this.ctx.arc(x, y, 50, 0, Math.PI * 2, false);
+    this.ctx.arc(0, 0, this.size, 0, Math.PI * 2, false);
     this.ctx.closePath();
     this.ctx.fill();
     this.ctx.stroke();

@@ -9,6 +9,7 @@ let lerpValue = 0;
 let size = 150 * pixelRatio;
 let angle = 90;
 
+let lineWidth = 2 * pixelRatio;
 let memoire = []; //new Array(); autre façon d'initaliser un array
 
 function start() {
@@ -17,14 +18,14 @@ function start() {
   monCanvas = document.getElementById("exercice_1");
   monCanvas.width = window.innerWidth * pixelRatio;
   monCanvas.height = window.innerHeight * pixelRatio;
-  monCanvas.style.width = window.innerWidth * pixelRatio;
-  monCanvas.style.height = window.innerHeight * pixelRatio;
+  monCanvas.style.width = window.innerWidth;
+  monCanvas.style.height = window.innerHeight;
   mesOutils = monCanvas.getContext("2d");
 
   let squareNumber = 6;
   let midArray = (size * squareNumber) / 2;
-  let topLeftW = monCanvas.width / 2 - midArray;
-  let topLeftH = monCanvas.height / 2 - midArray;
+  let topLeftW = (window.innerWidth / 2) * pixelRatio - midArray;
+  let topLeftH = (window.innerHeight / 2) * pixelRatio - midArray;
   for (let i = 0; i < squareNumber; i++) {
     for (let j = 0; j < squareNumber; j++) {
       let simpleTile = new Tile(
@@ -42,7 +43,10 @@ function start() {
 
   document.addEventListener("click", function (event) {
     for (let i = 0; i < memoire.length; i++) {
-      memoire[i].changeAngle(event.clientX, event.clientY);
+      memoire[i].changeAngle(
+        event.clientX * pixelRatio,
+        event.clientY * pixelRatio
+      );
     }
   });
 }
@@ -61,7 +65,7 @@ function animate() {
 */
 
   memoire.forEach(function (tile) {
-    tile.dessine();
+    tile.dessine(lineWidth);
   });
 
   requestAnimationFrame(animate);
